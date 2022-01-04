@@ -1,14 +1,18 @@
 import axios from 'axios';
 
-interface Character {
+const apiClient = axios.create({
+    baseURL: 'https://jsonplaceholder.typicode.com/posts'
+})
 
+export interface Character {
+    userId: number,
+    id: number,
+    title: String
 }
 
-const getCharacters = async (key: String, events: String[], comics: String[], series: String[]): Promise<Character[]> => {
-    const res = await axios.get(
-      'https://jsonplaceholder.typicode.com/posts',
-    );
-    return res.data;
+const getCharacters = async (): Promise<Character[]> => {
+    const response = await apiClient.get('');
+    return response.data as Array<Character>;
   };
 
 export default getCharacters
