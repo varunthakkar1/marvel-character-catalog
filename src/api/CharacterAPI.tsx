@@ -1,18 +1,32 @@
 import axios from 'axios';
+import { URL_ENDING } from '../constants'
 
 const apiClient = axios.create({
-    baseURL: 'https://jsonplaceholder.typicode.com/posts'
+    baseURL: 'https://gateway.marvel.com/v1/public'
 })
 
 export interface Character {
     userId: number,
+    name: String,
     id: number,
     title: String
 }
 
-const getCharacters = async (): Promise<Character[]> => {
-    const response = await apiClient.get('');
-    return response.data as Array<Character>;
+export interface GetCharactersResponse {
+    data: {
+        results: Character[]
+    }
+}
+
+interface GetCharactersRequest {
+    events: number[],
+    series: number[],
+    comics: number[]
+}
+
+const getCharacters = async ( { events, series, comics }: GetCharactersRequest): Promise<GetCharactersResponse> => {
+    const response = await apiClient.get('/characters?' + URL_ENDING);
+    return response.data;
   };
 
 export default getCharacters

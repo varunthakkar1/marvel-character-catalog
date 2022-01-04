@@ -1,19 +1,20 @@
 import React from 'react';
 import { useQuery, UseQueryResult } from 'react-query';
 import getCharacters from '../../api/CharacterAPI';
-import { Character } from '../../api/CharacterAPI';
-import { HASH } from '../../constants'
+import { GetCharactersResponse } from '../../api/CharacterAPI';
 
 interface HomePageProps {
     
 }
 
 const HomePage: React.FC<HomePageProps> = () => {
-    const { isSuccess, data }: UseQueryResult<Character[], Error> = useQuery<Character[], Error>('characters', getCharacters)
-    isSuccess && console.log(data)    
+    const { isFetched, data } = useQuery<GetCharactersResponse, Error>(['characters', {"comics": [1], "events": [1], "series": [1]}], () => getCharacters({"comics": [1], "events": [1], "series": [1]}))
+    data && console.log(data.data.results)
+
     return (
         <div>
             Testing
+            {data && data.data.results.map(item => console.log(item))}
         </div>
     );
 };
