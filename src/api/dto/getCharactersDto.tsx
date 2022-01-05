@@ -4,6 +4,8 @@ export interface GetCharactersResponse {
   data: {
     results: Character[];
   };
+  code: number;
+  status: String;
 }
 
 export interface GetCharactersRequest {

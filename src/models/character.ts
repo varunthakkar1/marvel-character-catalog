@@ -8,19 +8,19 @@ export interface Character {
     extension: String;
     path: String;
   };
-  comics: CollectionDataResponse;
-  events: CollectionDataResponse;
-  series: CollectionDataResponse;
+  comics: ListDataResponse;
+  events: ListDataResponse;
+  series: ListDataResponse;
 }
 
-interface CollectionDataResponse {
+export interface ListDataResponse {
   available: number;
   collectionURI: String;
-  items: DataItem[];
+  items: ListItem[];
   returned: number;
 }
 
-export interface DataItem {
+export interface ListItem {
   name: String;
   resourceURI: String;
 }
