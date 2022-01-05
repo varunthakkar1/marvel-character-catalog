@@ -2,7 +2,7 @@ import React from "react";
 import { useQuery, UseQueryResult } from "react-query";
 import getCharacters from "../../api/CharacterAPI";
 import { GetCharactersResponse } from "../../api/dto/getCharactersDto";
-import { Character } from "../../models/character";
+import { Character, DataItem } from "../../models/character";
 
 interface HomePageProps {}
 
@@ -17,7 +17,13 @@ const HomePage: React.FC<HomePageProps> = () => {
       Testing
       {data &&
         data.data.results.map((char: Character) => (
-          <div key={char.id}>{char.name}</div>
+          <div key={char.id}>
+            {char.name}
+            {console.log(char.comics)}
+            {char.events.items.map((comic: DataItem) => (
+              <div>{comic.name}</div>
+            ))}
+          </div>
         ))}
     </div>
   );
