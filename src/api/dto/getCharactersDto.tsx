@@ -1,13 +1,14 @@
-import { Character } from "../../models/character"
+import { Character } from "../../models/character";
 
 export interface GetCharactersResponse {
-    data: {
-        results: Character[]
-    }
+  data: {
+    results: Character[];
+  };
 }
 
 export interface GetCharactersRequest {
-    events: number[],
-    series: number[],
-    comics: number[]
+  events: number[];
+  series: number[];
+  comics: number[];
+  page: number;
 }

@@ -1,0 +1,8 @@
+/build
+/public
+/node_modules
+*.html
+README.md
+.prettierrc.json
+.gitignore
+prettierrc
