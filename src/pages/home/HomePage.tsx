@@ -5,7 +5,7 @@ import getCharacters from "../../api/CharacterAPI";
 import { GetCharactersResponse } from "../../api/dto/getCharactersDto";
 import { GetEventsResponse } from "../../api/dto/getEventsDto";
 import getEvents from "../../api/EventsAPI";
-import FilterModal from "../../components/FilterModal";
+import FilterModal from "../../components/EventFilterModal";
 import { Character, ListItem } from "../../models/character";
 import { Event } from "../../models/event";
 import { Filter } from "../../models/filter";
@@ -84,15 +84,6 @@ const HomePage: React.FC<HomePageProps> = () => {
     }
   };
 
-  // event filter logic
-  const addEventFilters = (filterToAdd: Filter) => {
-    setEventFilters(eventFilters.concat(filterToAdd));
-  };
-
-  const removeEventFilter = (filterToRemove: Filter) => {
-    /// setEventFilters(eventFilters.filter(filter))
-  };
-
   return (
     <Container>
       <button onClick={() => prevPage()}>Previous Page</button>
@@ -110,7 +101,6 @@ const HomePage: React.FC<HomePageProps> = () => {
             closeModalFunction={() =>
               setShowEventFilterModal(!showEventFilterModal)
             }
-            addFilterFunction={addEventFilters}
           />
         </ModalContainer>
       )}

@@ -5,10 +5,10 @@ import { GetEventsResponse } from "../api/dto/getEventsDto";
 import getEvents from "../api/EventsAPI";
 import { Filter } from "../models/filter";
 import { Event } from "../models/event";
+import FilterOption from "./FilterOption";
 
 interface FilterModalProps {
   closeModalFunction: () => void;
-  addFilterFunction: (filterData: Filter) => void;
 }
 
 const Container = styled.div`
@@ -24,8 +24,11 @@ const Container = styled.div`
   padding: 15px;
 `;
 
-const FilterModal: React.FC<FilterModalProps> = ({ closeModalFunction, addFilterFunction }) => {
+const EventFilterModal: React.FC<FilterModalProps> = ({
+  closeModalFunction,
+}) => {
   const [page, setPage] = useState<number>(1);
+  const [selectedFilters, setSelectedFilters] = useState<Filter[]>([]);
   const { data: events } = useQuery<GetEventsResponse, Error>(
     ["events", page],
     () => getEvents({ page: page })
@@ -44,6 +47,18 @@ const FilterModal: React.FC<FilterModalProps> = ({ closeModalFunction, addFilter
     }
   };
 
+  // adding filter logic
+  const addFilter = (filterToAdd: Filter) => {
+    setSelectedFilters(selectedFilters.concat(filterToAdd));
+  };
+  const removeFilter = (filterToRemove: Filter) => {
+    setSelectedFilters(
+      selectedFilters.filter((filter) => filter.id !== filterToRemove.id)
+    );
+  };
+
+  console.log(selectedFilters);
+
   return (
     <Container>
       <button onClick={() => prevPage()}>Previous Page</button>
@@ -51,10 +66,15 @@ const FilterModal: React.FC<FilterModalProps> = ({ closeModalFunction, addFilter
       <button onClick={closeModalFunction}>Close Modal</button>
       {events &&
         events.data.results.map((event: Event) => (
-          <div key={event.id}>{event.title}</div>
+          <FilterOption
+            filter={{ id: event.id, name: event.title }}
+            addFilterFunction={addFilter}
+            removeFilterFunction={removeFilter}
+            key={event.id}
+          />
         ))}
     </Container>
   );
 };
 
-export default FilterModal;
+export default EventFilterModal;
