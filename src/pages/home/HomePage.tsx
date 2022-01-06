@@ -71,11 +71,6 @@ const HomePage: React.FC<HomePageProps> = () => {
       })
   );
 
-  const { data: events } = useQuery<GetEventsResponse, Error>(
-    ["events", 1],
-    () => getEvents({ page: 2 })
-  );
-
   // page logic
   const maxPage = characters && Math.ceil(characters.data.total / 20);
   const nextPage = () => {
@@ -90,8 +85,8 @@ const HomePage: React.FC<HomePageProps> = () => {
   };
 
   // event filter logic
-  const addEventFilters = (filtersToAdd: Filter[]) => {
-    setEventFilters(eventFilters.concat(filtersToAdd));
+  const addEventFilters = (filterToAdd: Filter) => {
+    setEventFilters(eventFilters.concat(filterToAdd));
   };
 
   const removeEventFilter = (filterToRemove: Filter) => {
@@ -109,13 +104,14 @@ const HomePage: React.FC<HomePageProps> = () => {
         characters.data.results.map((char: Character) => (
           <div key={char.id}>{char.name}</div>
         ))}
-      {events &&
-        events.data.results.map((event: Event) => (
-          <div key={event.id}>{event.title}</div>
-        ))}
       {showEventFilterModal && (
         <ModalContainer>
-          <EventFilterModal addFilterFunction={addEventFilters} />
+          <EventFilterModal
+            closeModalFunction={() =>
+              setShowEventFilterModal(!showEventFilterModal)
+            }
+            addFilterFunction={addEventFilters}
+          />
         </ModalContainer>
       )}
     </Container>

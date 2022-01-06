@@ -7,7 +7,7 @@ import GlobalStyle from "./globalStyles";
 const App: React.FC = () => {
   return (
     <div className="App">
-      <GlobalStyle/>
+      <GlobalStyle />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
