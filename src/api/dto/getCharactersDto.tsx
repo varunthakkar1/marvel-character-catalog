@@ -3,6 +3,7 @@ import { Character } from "../../models/character";
 export interface GetCharactersResponse {
   data: {
     results: Character[];
+    total: number;
   };
   code: number;
   status: String;
