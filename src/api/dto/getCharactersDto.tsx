@@ -1,4 +1,5 @@
 import { Character } from "../../models/character";
+import { Filter } from "../../models/filter";
 
 export interface GetCharactersResponse {
   data: {
@@ -10,8 +11,8 @@ export interface GetCharactersResponse {
 }
 
 export interface GetCharactersRequest {
-  events: number[];
-  series: number[];
-  comics: number[];
+  events: Filter[];
+  series: Filter[];
+  comics: Filter[];
   page: number;
 }
