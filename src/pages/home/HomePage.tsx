@@ -9,6 +9,7 @@ import FilterModal from "../../components/EventFilterModal";
 import { Character, ListItem } from "../../models/character";
 import { Event } from "../../models/event";
 import { Filter } from "../../models/filter";
+import { FilterOption } from "../../models/filterOption";
 
 interface HomePageProps {}
 
@@ -98,6 +99,8 @@ const HomePage: React.FC<HomePageProps> = () => {
       {showEventFilterModal && (
         <ModalContainer>
           <EventFilterModal
+            filterOption={FilterOption.Events}
+            initialSelectedFilters={eventFilters}
             closeModalFunction={() =>
               setShowEventFilterModal(!showEventFilterModal)
             }

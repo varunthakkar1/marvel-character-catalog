@@ -5,10 +5,13 @@ import { GetEventsResponse } from "../api/dto/getEventsDto";
 import getEvents from "../api/EventsAPI";
 import { Filter } from "../models/filter";
 import { Event } from "../models/event";
-import FilterOption from "./FilterOption";
+import { FilterOption } from "../models/filterOption";
+import FilterListItem from "./FilterListItem";
 
 interface FilterModalProps {
   closeModalFunction: () => void;
+  initialSelectedFilters: Filter[];
+  filterOption: FilterOption;
 }
 
 const Container = styled.div`
@@ -26,32 +29,41 @@ const Container = styled.div`
 
 const EventFilterModal: React.FC<FilterModalProps> = ({
   closeModalFunction,
+  filterOption,
+  initialSelectedFilters
 }) => {
   const [page, setPage] = useState<number>(1);
-  const [selectedFilters, setSelectedFilters] = useState<Filter[]>([]);
+  const [selectedFilters, setSelectedFilters] = useState<Filter[]>(initialSelectedFilters);
   const { data: events } = useQuery<GetEventsResponse, Error>(
     ["events", page],
     () => getEvents({ page: page })
   );
 
+  // filter 'selected' prop logic helper
+  const isFilterSelected = (id: number): boolean => {
+    let result = false
+    selectedFilters.map((filter: Filter) => {if (filter.id === id) {result = true}})
+    return result
+  }
+
   // page logic
   const maxPage = events && Math.ceil(events.data.total / 20);
-  const nextPage = () => {
+  const nextPage = (): void => {
     if (maxPage && page !== maxPage) {
       setPage(page + 1);
     }
   };
-  const prevPage = () => {
+  const prevPage = (): void => {
     if (page !== 1) {
       setPage(page - 1);
     }
   };
 
   // adding filter logic
-  const addFilter = (filterToAdd: Filter) => {
+  const addFilter = (filterToAdd: Filter): void => {
     setSelectedFilters(selectedFilters.concat(filterToAdd));
   };
-  const removeFilter = (filterToRemove: Filter) => {
+  const removeFilter = (filterToRemove: Filter): void => {
     setSelectedFilters(
       selectedFilters.filter((filter) => filter.id !== filterToRemove.id)
     );
@@ -66,7 +78,8 @@ const EventFilterModal: React.FC<FilterModalProps> = ({
       <button onClick={closeModalFunction}>Close Modal</button>
       {events &&
         events.data.results.map((event: Event) => (
-          <FilterOption
+          <FilterListItem
+            initialIsSelected={isFilterSelected(event.id)}
             filter={{ id: event.id, name: event.title }}
             addFilterFunction={addFilter}
             removeFilterFunction={removeFilter}
