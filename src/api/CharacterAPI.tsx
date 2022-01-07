@@ -1,5 +1,4 @@
 import axios from "axios";
-import { URL_ENDING } from "../constants";
 import {
   GetCharactersResponse,
   GetCharactersRequest,

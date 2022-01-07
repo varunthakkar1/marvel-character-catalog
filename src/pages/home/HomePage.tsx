@@ -37,10 +37,7 @@ const HomePage: React.FC<HomePageProps> = () => {
   const [page, setPage] = useState<number>(1);
 
   // character query
-  const { isFetched, data: characters } = useQuery<
-    GetCharactersResponse,
-    Error
-  >(
+  const { data: characters } = useQuery<GetCharactersResponse, Error>(
     [
       "characters",
       {

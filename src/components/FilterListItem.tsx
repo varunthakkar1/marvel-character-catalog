@@ -12,11 +12,12 @@ interface FilterOptionProps {
 
 const Container = styled.div<{ selected: boolean }>`
   display: flex;
-  width: 100%;
+  width: 380px;
   justify-content: space-between;
-  padding: 5px;
+  padding: 5px 10px;
   transition: transform 0.3s ease-out;
-  background: ${(props) => (props.selected ? "#f54278" : "#42f572")};
+  transition: background-color 0.1s ease-out;
+  background: ${(props) => (props.selected ? "rgba(85, 255, 89, 0.4)" : "")};
 `;
 
 const TextContainer = styled.div`
@@ -27,6 +28,7 @@ const TextContainer = styled.div`
 const IconWrapper = styled(AiOutlinePlus)<{ selected: boolean }>`
   padding: 0;
   transition: transform 0.3s ease-out;
+  cursor: pointer;
   transform: ${(props) => (props.selected ? `rotate(45deg)` : "")};
 `;
 
