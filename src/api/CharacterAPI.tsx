@@ -17,7 +17,12 @@ const getCharacters = async ({
   page,
 }: GetCharactersRequest): Promise<GetCharactersResponse> => {
   const response = await apiClient.get(
-    constructCharacterQuery({ events: events, series: series, comics: comics, page: page })
+    constructCharacterQuery({
+      events: events,
+      series: series,
+      comics: comics,
+      page: page,
+    })
   );
   return response.data;
 };

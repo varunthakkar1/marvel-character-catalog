@@ -1,7 +1,7 @@
 import { ListDataResponse } from "./character";
 
 export interface Series {
-    title: String;
+  title: String;
   id: number;
   description: String;
   modified: Date;

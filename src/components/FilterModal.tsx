@@ -215,7 +215,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
               key={comic.id}
             />
           ));
-          break;
+        break;
       }
       case FilterOption.Series: {
         output =

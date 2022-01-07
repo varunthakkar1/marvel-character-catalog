@@ -3,13 +3,9 @@ import { useQuery } from "react-query";
 import styled from "styled-components";
 import getCharacters from "../../api/CharacterAPI";
 import { GetCharactersResponse } from "../../api/dto/getCharactersDto";
-import { GetEventsResponse } from "../../api/dto/getEventsDto";
-import getEvents from "../../api/EventAPI";
 import FilterModal from "../../components/FilterModal";
-import { Character, ListItem } from "../../models/character";
-import { Event } from "../../models/event";
+import { Character } from "../../models/character";
 import { Filter } from "../../models/filter";
-import { FilterOption } from "../../models/filterOption";
 
 interface HomePageProps {}
 
@@ -26,14 +22,6 @@ const ModalContainer = styled.div`
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.6);
-`;
-
-const EventFilterModal = styled(FilterModal)`
-  position: fixed;
-  background: white;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 `;
 
 const HomePage: React.FC<HomePageProps> = () => {
@@ -94,7 +82,7 @@ const HomePage: React.FC<HomePageProps> = () => {
   const saveComicFilters = (filters: Filter[]): void => {
     setComicFilters(filters);
   };
-  
+
   return (
     <Container>
       <button onClick={() => prevPage()}>Previous Page</button>
@@ -115,7 +103,10 @@ const HomePage: React.FC<HomePageProps> = () => {
             initialSelectedComicFilters={comicFilters}
             initialSelectedEventFilters={eventFilters}
             initialSelectedSeriesFilters={seriesFilters}
-            closeModalFunction={() => setShowFilterModal(!showFilterModal)}
+            closeModalFunction={() => {
+              setPage(1);
+              setShowFilterModal(!showFilterModal);
+            }}
           />
         </ModalContainer>
       )}
