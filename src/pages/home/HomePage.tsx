@@ -43,12 +43,7 @@ const HomePage: React.FC<HomePageProps> = () => {
   const [comicFilters, setComicFilters] = useState<Filter[]>([]);
 
   // modal states
-  const [showEventFilterModal, setShowEventFilterModal] =
-    useState<boolean>(false);
-  const [showComicFilterModal, setShowComicFilterModal] =
-    useState<boolean>(false);
-  const [showSeriesFilterModal, setShowSeriesFilterModal] =
-    useState<boolean>(false);
+  const [showFilterModal, setShowFilterModal] = useState<boolean>(false);
 
   // page state
   const [page, setPage] = useState<number>(1);
@@ -96,7 +91,7 @@ const HomePage: React.FC<HomePageProps> = () => {
   const saveSeriesFilters = (filters: Filter[]): void => {
     setSeriesFilters(filters);
   };
-  const saveComicsFilters = (filters: Filter[]): void => {
+  const saveComicFilters = (filters: Filter[]): void => {
     setComicFilters(filters);
   };
 
@@ -108,22 +103,23 @@ const HomePage: React.FC<HomePageProps> = () => {
     <Container>
       <button onClick={() => prevPage()}>Previous Page</button>
       <button onClick={() => nextPage()}>Next Page</button>
-      <button onClick={() => setShowEventFilterModal(!showEventFilterModal)}>
+      <button onClick={() => setShowFilterModal(!showFilterModal)}>
         Open Event Filters
       </button>
       {characters &&
         characters.data.results.map((char: Character) => (
           <div key={char.id}>{char.name}</div>
         ))}
-      {showEventFilterModal && (
+      {showFilterModal && (
         <ModalContainer>
           <FilterModal
-            setFiltersFunction={saveEventFilters}
-            filterOption={FilterOption.Events}
-            initialSelectedFilters={eventFilters}
-            closeModalFunction={() =>
-              setShowEventFilterModal(!showEventFilterModal)
-            }
+            setEventFiltersFunction={saveEventFilters}
+            setSeriesFiltersFunction={saveSeriesFilters}
+            setComicFiltersFunction={saveComicFilters}
+            initialSelectedComicFilters={comicFilters}
+            initialSelectedEventFilters={eventFilters}
+            initialSelectedSeriesFilters={seriesFilters}
+            closeModalFunction={() => setShowFilterModal(!showFilterModal)}
           />
         </ModalContainer>
       )}

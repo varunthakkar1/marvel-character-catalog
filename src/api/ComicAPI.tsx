@@ -15,3 +15,5 @@ const getComics = async ({
   );
   return response.data;
 };
+
+export default getComics;
