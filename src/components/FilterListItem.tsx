@@ -16,7 +16,7 @@ const Container = styled.div<{ selected: boolean }>`
   justify-content: space-between;
   padding: 5px;
   transition: transform 0.3s ease-out;
-  background: ${(props) => (props.selected ? "#f54278": "#42f572")};
+  background: ${(props) => (props.selected ? "#f54278" : "#42f572")};
 `;
 
 const IconWrapper = styled(AiOutlinePlus)<{ selected: boolean }>`

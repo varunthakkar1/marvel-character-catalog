@@ -1,5 +1,5 @@
 export enum FilterOption {
-    Events,
-    Comics,
-    Series
+  Events,
+  Comics,
+  Series,
 }

@@ -12,12 +12,13 @@ interface FilterModalProps {
   closeModalFunction: () => void;
   initialSelectedFilters: Filter[];
   filterOption: FilterOption;
+  setFiltersFunction: (filters: Filter[]) => void;
 }
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 450px;
+  width: 350px;
   background: white;
   position: fixed;
   top: 50%;
@@ -27,13 +28,16 @@ const Container = styled.div`
   padding: 15px;
 `;
 
-const EventFilterModal: React.FC<FilterModalProps> = ({
+const FilterModal: React.FC<FilterModalProps> = ({
   closeModalFunction,
   filterOption,
-  initialSelectedFilters
+  initialSelectedFilters,
+  setFiltersFunction,
 }) => {
   const [page, setPage] = useState<number>(1);
-  const [selectedFilters, setSelectedFilters] = useState<Filter[]>(initialSelectedFilters);
+  const [selectedFilters, setSelectedFilters] = useState<Filter[]>(
+    initialSelectedFilters
+  );
   const { data: events } = useQuery<GetEventsResponse, Error>(
     ["events", page],
     () => getEvents({ page: page })
@@ -41,10 +45,14 @@ const EventFilterModal: React.FC<FilterModalProps> = ({
 
   // filter 'selected' prop logic helper
   const isFilterSelected = (id: number): boolean => {
-    let result = false
-    selectedFilters.map((filter: Filter) => {if (filter.id === id) {result = true}})
-    return result
-  }
+    let result = false;
+    selectedFilters.map((filter: Filter) => {
+      if (filter.id === id) {
+        result = true;
+      }
+    });
+    return result;
+  };
 
   // page logic
   const maxPage = events && Math.ceil(events.data.total / 20);
@@ -69,8 +77,6 @@ const EventFilterModal: React.FC<FilterModalProps> = ({
     );
   };
 
-  console.log(selectedFilters);
-
   return (
     <Container>
       <button onClick={() => prevPage()}>Previous Page</button>
@@ -86,8 +92,11 @@ const EventFilterModal: React.FC<FilterModalProps> = ({
             key={event.id}
           />
         ))}
+      <button onClick={() => setFiltersFunction(selectedFilters)}>
+        Save filters
+      </button>
     </Container>
   );
 };
 
-export default EventFilterModal;
+export default FilterModal;

@@ -5,7 +5,7 @@ import getCharacters from "../../api/CharacterAPI";
 import { GetCharactersResponse } from "../../api/dto/getCharactersDto";
 import { GetEventsResponse } from "../../api/dto/getEventsDto";
 import getEvents from "../../api/EventsAPI";
-import FilterModal from "../../components/EventFilterModal";
+import FilterModal from "../../components/FilterModal";
 import { Character, ListItem } from "../../models/character";
 import { Event } from "../../models/event";
 import { Filter } from "../../models/filter";
@@ -40,10 +40,14 @@ const HomePage: React.FC<HomePageProps> = () => {
   // filter states
   const [eventFilters, setEventFilters] = useState<Filter[]>([]);
   const [seriesFilters, setSeriesFilters] = useState<Filter[]>([]);
-  const [comicFilters, seComictFilters] = useState<Filter[]>([]);
+  const [comicFilters, setComicFilters] = useState<Filter[]>([]);
 
   // modal states
   const [showEventFilterModal, setShowEventFilterModal] =
+    useState<boolean>(false);
+  const [showComicFilterModal, setShowComicFilterModal] =
+    useState<boolean>(false);
+  const [showSeriesFilterModal, setShowSeriesFilterModal] =
     useState<boolean>(false);
 
   // page state
@@ -85,6 +89,21 @@ const HomePage: React.FC<HomePageProps> = () => {
     }
   };
 
+  // saving filter logic
+  const saveEventFilters = (filters: Filter[]): void => {
+    setEventFilters(filters);
+  };
+  const saveSeriesFilters = (filters: Filter[]): void => {
+    setSeriesFilters(filters);
+  };
+  const saveComicsFilters = (filters: Filter[]): void => {
+    setComicFilters(filters);
+  };
+
+  console.log(eventFilters);
+  console.log(seriesFilters);
+  console.log(comicFilters);
+
   return (
     <Container>
       <button onClick={() => prevPage()}>Previous Page</button>
@@ -98,7 +117,8 @@ const HomePage: React.FC<HomePageProps> = () => {
         ))}
       {showEventFilterModal && (
         <ModalContainer>
-          <EventFilterModal
+          <FilterModal
+            setFiltersFunction={saveEventFilters}
             filterOption={FilterOption.Events}
             initialSelectedFilters={eventFilters}
             closeModalFunction={() =>
