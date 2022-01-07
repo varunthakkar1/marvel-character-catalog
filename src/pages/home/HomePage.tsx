@@ -94,11 +94,7 @@ const HomePage: React.FC<HomePageProps> = () => {
   const saveComicFilters = (filters: Filter[]): void => {
     setComicFilters(filters);
   };
-
-  console.log(eventFilters);
-  console.log(seriesFilters);
-  console.log(comicFilters);
-
+  
   return (
     <Container>
       <button onClick={() => prevPage()}>Previous Page</button>

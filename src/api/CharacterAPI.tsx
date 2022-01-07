@@ -4,8 +4,8 @@ import {
   GetCharactersResponse,
   GetCharactersRequest,
 } from "./dto/getCharactersDto";
+import constructCharacterQuery from "./utils/apiUtils";
 
-const API_OUTPUT_LIMIT = 20;
 const apiClient = axios.create({
   baseURL: "https://gateway.marvel.com/v1/public",
 });
@@ -17,7 +17,7 @@ const getCharacters = async ({
   page,
 }: GetCharactersRequest): Promise<GetCharactersResponse> => {
   const response = await apiClient.get(
-    "/characters?" + URL_ENDING + "&offset=" + API_OUTPUT_LIMIT * (page - 1)
+    constructCharacterQuery({ events: events, series: series, comics: comics, page: page })
   );
   return response.data;
 };
