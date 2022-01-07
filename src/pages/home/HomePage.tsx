@@ -4,7 +4,7 @@ import styled from "styled-components";
 import getCharacters from "../../api/CharacterAPI";
 import { GetCharactersResponse } from "../../api/dto/getCharactersDto";
 import { GetEventsResponse } from "../../api/dto/getEventsDto";
-import getEvents from "../../api/EventsAPI";
+import getEvents from "../../api/EventAPI";
 import FilterModal from "../../components/FilterModal";
 import { Character, ListItem } from "../../models/character";
 import { Event } from "../../models/event";

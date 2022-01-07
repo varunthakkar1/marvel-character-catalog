@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
 import { GetEventsResponse } from "../api/dto/getEventsDto";
-import getEvents from "../api/EventsAPI";
+import getEvents from "../api/EventAPI";
 import { Filter } from "../models/filter";
 import { Event } from "../models/event";
 import { FilterOption } from "../models/filterOption";
