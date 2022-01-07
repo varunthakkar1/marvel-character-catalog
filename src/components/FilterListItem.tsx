@@ -22,7 +22,7 @@ const Container = styled.div<{ selected: boolean }>`
 const TextContainer = styled.div`
   display: flex;
   font-size: 10px;
-`
+`;
 
 const IconWrapper = styled(AiOutlinePlus)<{ selected: boolean }>`
   padding: 0;
@@ -49,9 +49,7 @@ const FilterListItem: React.FC<FilterOptionProps> = ({
   };
   return (
     <Container selected={selected}>
-      <TextContainer>
-        {filter.name}
-      </TextContainer>
+      <TextContainer>{filter.name}</TextContainer>
       <IconWrapper
         selected={selected}
         onClick={selected ? removeFilter : addFilter}

@@ -10,6 +10,9 @@ import { FilterOption } from "../models/filterOption";
 import FilterListItem from "./FilterListItem";
 import { GetComicsResponse } from "../api/dto/getComicsDto";
 import { Comic } from "../models/comic";
+import { GetSeriesResponse } from "../api/dto/getSeriesDto";
+import getSeries from "../api/SeriesAPI";
+import { Series } from "../models/series";
 
 interface FilterModalProps {
   closeModalFunction: () => void;
@@ -39,12 +42,12 @@ const FilterLabel = styled.button`
   justify-content: center;
   align-items: center;
   width: 33%;
-`
+`;
 
 const FilterLabelContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
-`
+`;
 
 const FilterModal: React.FC<FilterModalProps> = ({
   closeModalFunction,
@@ -80,6 +83,10 @@ const FilterModal: React.FC<FilterModalProps> = ({
   const { data: comics } = useQuery<GetComicsResponse, Error>(
     ["comics", page],
     () => getComics({ page: page })
+  );
+  const { data: series } = useQuery<GetSeriesResponse, Error>(
+    ["series", page],
+    () => getSeries({ page: page })
   );
 
   // filter 'selected' prop logic helper
@@ -117,6 +124,9 @@ const FilterModal: React.FC<FilterModalProps> = ({
         break;
       case FilterOption.Comics:
         maxPage = comics && Math.ceil(comics.data.total / 20);
+        break;
+      case FilterOption.Series:
+        maxPage = series && Math.ceil(series.data.total / 20);
         break;
     }
     if (maxPage && page !== maxPage) {
@@ -205,6 +215,20 @@ const FilterModal: React.FC<FilterModalProps> = ({
               key={comic.id}
             />
           ));
+          break;
+      }
+      case FilterOption.Series: {
+        output =
+          series &&
+          series.data.results.map((series: Series) => (
+            <FilterListItem
+              initialIsSelected={isFilterSelected(series.id)}
+              filter={{ id: series.id, name: series.title }}
+              addFilterFunction={addFilter}
+              removeFilterFunction={removeFilter}
+              key={series.id}
+            />
+          ));
       }
     }
     return output;
@@ -222,17 +246,41 @@ const FilterModal: React.FC<FilterModalProps> = ({
         setSeriesFiltersFunction(selectedSeriesFilters);
         break;
     }
-  }
+  };
 
   return (
     <Container>
+      <FilterLabelContainer>
+        <FilterLabel
+          onClick={() => {
+            setPage(1);
+            setCurrentOption(FilterOption.Events);
+          }}
+        >
+          Events
+        </FilterLabel>
+        <FilterLabel
+          onClick={() => {
+            setPage(1);
+            setCurrentOption(FilterOption.Comics);
+          }}
+        >
+          Comics
+        </FilterLabel>
+        <FilterLabel
+          onClick={() => {
+            setPage(1);
+            setCurrentOption(FilterOption.Series);
+          }}
+        >
+          Series
+        </FilterLabel>
+      </FilterLabelContainer>
       <button onClick={() => prevPage()}>Previous Page</button>
       <button onClick={() => nextPage()}>Next Page</button>
       <button onClick={closeModalFunction}>Close Modal</button>
       {renderListContent()}
-      <button onClick={saveFilters}>
-        Save filters
-      </button>
+      <button onClick={saveFilters}>Save filters</button>
     </Container>
   );
 };
