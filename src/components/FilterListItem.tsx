@@ -12,9 +12,10 @@ interface FilterOptionProps {
 
 const Container = styled.div<{ selected: boolean }>`
   display: flex;
-  width: 380px;
+  width: 330px;
+  height: 100%;
   justify-content: space-between;
-  padding: 5px 10px;
+  padding: 6px 10px;
   transition: transform 0.3s ease-out;
   transition: background-color 0.1s ease-out;
   background: ${(props) => (props.selected ? "rgba(85, 255, 89, 0.4)" : "")};
@@ -23,13 +24,20 @@ const Container = styled.div<{ selected: boolean }>`
 const TextContainer = styled.div`
   display: flex;
   font-size: 10px;
+  width: 60%;
 `;
 
-const IconWrapper = styled(AiOutlinePlus)<{ selected: boolean }>`
+const Icon = styled(AiOutlinePlus)<{ selected: boolean }>`
+  display: flex;
   padding: 0;
   transition: transform 0.3s ease-out;
+  height: 100%;
   cursor: pointer;
   transform: ${(props) => (props.selected ? `rotate(45deg)` : "")};
+`;
+
+const IconContainer = styled.div`
+  display: flex;
 `;
 
 const FilterListItem: React.FC<FilterOptionProps> = ({
@@ -52,10 +60,12 @@ const FilterListItem: React.FC<FilterOptionProps> = ({
   return (
     <Container selected={selected}>
       <TextContainer>{filter.name}</TextContainer>
-      <IconWrapper
-        selected={selected}
-        onClick={selected ? removeFilter : addFilter}
-      />
+      <IconContainer>
+        <Icon
+          selected={selected}
+          onClick={selected ? removeFilter : addFilter}
+        />
+      </IconContainer>
     </Container>
   );
 };

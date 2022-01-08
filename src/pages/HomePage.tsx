@@ -85,7 +85,7 @@ const HomePage: React.FC<HomePageProps> = () => {
       <button onClick={() => prevPage()}>Previous Page</button>
       <button onClick={() => nextPage()}>Next Page</button>
       <button onClick={() => setShowFilterModal(!showFilterModal)}>
-        Open Event Filters
+        Add Filters
       </button>
       {characters &&
         characters.data.results.map((char: Character) => (

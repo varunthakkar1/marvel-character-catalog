@@ -27,23 +27,25 @@ interface FilterModalProps {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 400px;
+  width: 350px;
   background: white;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 5px;
+  overflow: hidden;
 `;
 
 const FilterLabel = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 33%;
+  width: 34%;
   padding: 10px 0px;
   border: none;
   cursor: pointer;
+  font-weight: bold;
 `;
 
 const FilterLabelContainer = styled.div`
@@ -247,18 +249,41 @@ const FilterModal: React.FC<FilterModalProps> = ({
     closeModalFunction();
   };
 
-  // label styling
+  // filter label button styling
   const EventsLabel = styled(FilterLabel)`
-    color: ${(props) =>
-      currentOption === FilterOption.Events ? css`white` : css`gray`};
+    color: whitesmoke;
+    background-color: ${(props) =>
+      currentOption === FilterOption.Events
+        ? css`rgba(149, 125, 173, 0.6)`
+        : css`rgba(0, 0, 0, 0.4)`};
   `;
   const ComicsLabel = styled(FilterLabel)`
-    color: ${(props) =>
-      currentOption === FilterOption.Comics ? css`white` : css`gray`};
+    color: whitesmoke;
+    background-color: ${(props) =>
+      currentOption === FilterOption.Comics
+        ? css`rgba(210, 145, 188, 0.6)`
+        : css`rgba(0, 0, 0, 0.4)`};
   `;
   const SeriesLabel = styled(FilterLabel)`
-    color: ${(props) =>
-      currentOption === FilterOption.Series ? css`white` : css`gray`};
+    color: whitesmoke;
+    background-color: ${(props) =>
+      currentOption === FilterOption.Series
+        ? css`rgba(255, 85, 80, 0.6)`
+        : css`rgba(0, 0, 0, 0.4)`};
+  `;
+
+  // other button styling
+  const CloseModalButton = styled.button`
+    color: whitesmoke;
+    font-weight: bold;
+    border: none;
+    padding: 10px 0px;
+    background-color: ${(props) =>
+      currentOption === FilterOption.Series
+        ? css`rgba(255, 85, 80, 0.6)`
+        : currentOption === FilterOption.Events
+        ? css`rgba(149, 125, 173, 0.6)`
+        : css`rgba(210, 145, 188, 0.6)`};
   `;
 
   return (
@@ -270,7 +295,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
             setCurrentOption(FilterOption.Events);
           }}
         >
-          Events
+          EVENTS
         </EventsLabel>
         <ComicsLabel
           onClick={() => {
@@ -278,7 +303,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
             setCurrentOption(FilterOption.Comics);
           }}
         >
-          Comics
+          COMICS
         </ComicsLabel>
         <SeriesLabel
           onClick={() => {
@@ -286,13 +311,13 @@ const FilterModal: React.FC<FilterModalProps> = ({
             setCurrentOption(FilterOption.Series);
           }}
         >
-          Series
+          SERIES
         </SeriesLabel>
       </FilterLabelContainer>
       <button onClick={() => decreasePage(1)}>Previous Page</button>
       <button onClick={() => increasePage(1)}>Next Page</button>
-      <button onClick={closeModal}>Close Modal</button>
       {renderListContent()}
+      <CloseModalButton onClick={closeModal}>CLOSE</CloseModalButton>
     </Container>
   );
 };
