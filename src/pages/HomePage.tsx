@@ -58,12 +58,12 @@ const HomePage: React.FC<HomePageProps> = () => {
 
   // page logic
   const maxPage = characters && Math.ceil(characters.data.total / 20);
-  const nextPage = () => {
+  const nextPage = (): void => {
     if (maxPage && page !== maxPage) {
       setPage(page + 1);
     }
   };
-  const prevPage = () => {
+  const prevPage = (): void => {
     if (page !== 1) {
       setPage(page - 1);
     }

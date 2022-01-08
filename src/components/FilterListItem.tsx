@@ -49,11 +49,11 @@ const FilterListItem: React.FC<FilterOptionProps> = ({
   const [selected, setSelected] = useState<boolean>(initialIsSelected);
 
   // filter selection logic
-  const addFilter = () => {
+  const addFilter = (): void => {
     setSelected(true);
     addFilterFunction(filter);
   };
-  const removeFilter = () => {
+  const removeFilter = (): void => {
     setSelected(false);
     removeFilterFunction(filter);
   };
