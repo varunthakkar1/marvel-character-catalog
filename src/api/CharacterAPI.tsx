@@ -1,13 +1,9 @@
-import axios from "axios";
+import { apiClient } from "./client";
 import {
   GetCharactersResponse,
   GetCharactersRequest,
 } from "./dto/getCharactersDto";
 import constructCharacterQuery from "./utils/apiUtils";
-
-const apiClient = axios.create({
-  baseURL: "https://gateway.marvel.com/v1/public",
-});
 
 const getCharacters = async ({
   events,

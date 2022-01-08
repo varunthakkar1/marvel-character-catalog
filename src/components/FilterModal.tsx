@@ -295,7 +295,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
             setCurrentOption(FilterOption.Events);
           }}
         >
-          EVENTS
+          Events
         </EventsLabel>
         <ComicsLabel
           onClick={() => {
@@ -303,7 +303,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
             setCurrentOption(FilterOption.Comics);
           }}
         >
-          COMICS
+          Comics
         </ComicsLabel>
         <SeriesLabel
           onClick={() => {
@@ -311,13 +311,13 @@ const FilterModal: React.FC<FilterModalProps> = ({
             setCurrentOption(FilterOption.Series);
           }}
         >
-          SERIES
+          Series
         </SeriesLabel>
       </FilterLabelContainer>
       <button onClick={() => decreasePage(1)}>Previous Page</button>
       <button onClick={() => increasePage(1)}>Next Page</button>
       {renderListContent()}
-      <CloseModalButton onClick={closeModal}>CLOSE</CloseModalButton>
+      <CloseModalButton onClick={closeModal}>Close</CloseModalButton>
     </Container>
   );
 };

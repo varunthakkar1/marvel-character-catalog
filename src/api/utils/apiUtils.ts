@@ -1,4 +1,5 @@
 import { URL_ENDING } from "../../constants";
+import { API_OUTPUT_LIMIT } from "../client";
 import { GetCharactersRequest } from "../dto/getCharactersDto";
 
 const constructCharacterQuery = ({
@@ -7,7 +8,13 @@ const constructCharacterQuery = ({
   comics,
   page,
 }: GetCharactersRequest): string => {
-  let url = "/characters?" + URL_ENDING + "&offset=" + 20 * (page - 1);
+  let url =
+    "/characters?" +
+    URL_ENDING +
+    "&offset=" +
+    API_OUTPUT_LIMIT * (page - 1) +
+    "&limit=" +
+    API_OUTPUT_LIMIT;
   if (events.length > 0) {
     url = url + "&events=";
     events.forEach((event) => {

@@ -23,7 +23,7 @@ const Container = styled.div<{ selected: boolean }>`
 
 const TextContainer = styled.div`
   display: flex;
-  font-size: 10px;
+  font-size: 13px;
   width: 60%;
 `;
 
