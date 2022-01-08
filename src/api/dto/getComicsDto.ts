@@ -6,7 +6,7 @@ export interface GetComicsResponse {
     total: number;
   };
   code: number;
-  status: String;
+  status: string;
 }
 
 export interface GetComicsRequest {

@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import styled from "styled-components";
 import getCharacters from "../api/CharacterAPI";
 import { GetCharactersResponse } from "../api/dto/getCharactersDto";
+import CharacterCard from "../components/CharacterCard";
 import FilterModal from "../components/FilterModal";
 import { Character } from "../models/character";
 import { Filter } from "../models/filter";
@@ -11,8 +12,20 @@ interface HomePageProps {}
 
 const Container = styled.div`
   display: flex;
+  width: 80%;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
   flex-direction: column;
   width: 100%;
+`;
+
+const CharacterCardContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
 `;
 
 const ModalContainer = styled.div`
@@ -82,15 +95,21 @@ const HomePage: React.FC<HomePageProps> = () => {
 
   return (
     <Container>
-      <button onClick={() => prevPage()}>Previous Page</button>
-      <button onClick={() => nextPage()}>Next Page</button>
-      <button onClick={() => setShowFilterModal(!showFilterModal)}>
-        Add Filters
-      </button>
-      {characters &&
-        characters.data.results.map((char: Character) => (
-          <div key={char.id}>{char.name}</div>
-        ))}
+      <ButtonContainer>
+        <button onClick={() => prevPage()}>Previous Page</button>
+        <button onClick={() => nextPage()}>Next Page</button>
+        <button onClick={() => setShowFilterModal(!showFilterModal)}>
+          Add Filters
+        </button>
+      </ButtonContainer>
+      <CharacterCardContainer>
+        {characters &&
+          characters.data.results.map((char: Character) => (
+            <CharacterCard key={char.id} character={char}>
+              {char.name}
+            </CharacterCard>
+          ))}
+      </CharacterCardContainer>
       {showFilterModal && (
         <ModalContainer>
           <FilterModal

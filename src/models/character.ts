@@ -1,12 +1,12 @@
 export interface Character {
-  name: String;
+  name: string;
   id: number;
-  description: String;
+  description: string;
   modified: Date;
-  resourceURI: String;
+  resourceURI: string;
   thumbnail: {
-    extension: String;
-    path: String;
+    extension: string;
+    path: string;
   };
   comics: ListDataResponse;
   events: ListDataResponse;
@@ -15,12 +15,12 @@ export interface Character {
 
 export interface ListDataResponse {
   available: number;
-  collectionURI: String;
+  collectionURI: string;
   items: ListItem[];
   returned: number;
 }
 
 export interface ListItem {
-  name: String;
-  resourceURI: String;
+  name: string;
+  resourceURI: string;
 }

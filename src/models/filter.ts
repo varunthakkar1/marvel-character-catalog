@@ -1,4 +1,4 @@
 export interface Filter {
-  name: String;
+  name: string;
   id: number;
 }

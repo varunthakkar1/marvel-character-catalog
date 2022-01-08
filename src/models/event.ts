@@ -1,16 +1,16 @@
 import { ListDataResponse } from "./character";
 
 export interface Event {
-  title: String;
+  title: string;
   id: number;
-  description: String;
+  description: string;
   modified: Date;
-  resourceURI: String;
+  resourceURI: string;
   start: Date;
   end: Date;
   thumbnail: {
-    extension: String;
-    path: String;
+    extension: string;
+    path: string;
   };
   comics: ListDataResponse;
   characters: ListDataResponse;

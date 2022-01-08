@@ -53,6 +53,13 @@ const FilterLabelContainer = styled.div`
   justify-content: space-evenly;
 `;
 
+const PageNumberText = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  font-size: 12px;
+`;
+
 const FilterModal: React.FC<FilterModalProps> = ({
   closeModalFunction,
   initialSelectedEventFilters,
@@ -317,6 +324,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
       <button onClick={() => decreasePage(1)}>Previous Page</button>
       <button onClick={() => increasePage(1)}>Next Page</button>
       {renderListContent()}
+      <PageNumberText>Page {page}</PageNumberText>
       <CloseModalButton onClick={closeModal}>Close</CloseModalButton>
     </Container>
   );

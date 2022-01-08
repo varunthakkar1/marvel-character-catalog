@@ -1,14 +1,14 @@
 import { ListDataResponse } from "./character";
 
 export interface Series {
-  title: String;
+  title: string;
   id: number;
-  description: String;
+  description: string;
   modified: Date;
-  resourceURI: String;
+  resourceURI: string;
   thumbnail: {
-    extension: String;
-    path: String;
+    extension: string;
+    path: string;
   };
   creators: ListDataResponse;
   characters: ListDataResponse;

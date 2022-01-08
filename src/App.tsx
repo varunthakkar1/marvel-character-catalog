@@ -3,10 +3,16 @@ import HomePage from "./pages/HomePage";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import CharacterPage from "./pages/CharacterPage";
 import GlobalStyle from "./globalStyles";
+import styled from "styled-components";
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+`;
 
 const App: React.FC = () => {
   return (
-    <div className="App">
+    <Container className="App">
       <GlobalStyle />
       <BrowserRouter>
         <Routes>
@@ -14,7 +20,7 @@ const App: React.FC = () => {
           <Route path="/:id" element={<CharacterPage />} />
         </Routes>
       </BrowserRouter>
-    </div>
+    </Container>
   );
 };
 

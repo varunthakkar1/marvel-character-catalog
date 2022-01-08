@@ -6,7 +6,7 @@ export interface GetEventsResponse {
     total: number;
   };
   code: number;
-  status: String;
+  status: string;
 }
 
 export interface GetEventsRequest {
