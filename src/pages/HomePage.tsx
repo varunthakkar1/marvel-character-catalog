@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
-import getCharacters from "../../api/CharacterAPI";
-import { GetCharactersResponse } from "../../api/dto/getCharactersDto";
-import FilterModal from "../../components/FilterModal";
-import { Character } from "../../models/character";
-import { Filter } from "../../models/filter";
+import getCharacters from "../api/CharacterAPI";
+import { GetCharactersResponse } from "../api/dto/getCharactersDto";
+import FilterModal from "../components/FilterModal";
+import { Character } from "../models/character";
+import { Filter } from "../models/filter";
 
 interface HomePageProps {}
 

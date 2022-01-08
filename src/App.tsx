@@ -1,7 +1,7 @@
 import React from "react";
-import HomePage from "./pages/home/HomePage";
+import HomePage from "./pages/HomePage";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
-import CharacterPage from "./pages/character/CharacterPage";
+import CharacterPage from "./pages/CharacterPage";
 import GlobalStyle from "./globalStyles";
 
 const App: React.FC = () => {

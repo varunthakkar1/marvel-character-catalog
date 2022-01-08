@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useQuery } from "react-query";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { GetEventsResponse } from "../api/dto/getEventsDto";
 import getEvents from "../api/EventAPI";
 import getComics from "../api/ComicAPI";
@@ -41,6 +41,9 @@ const FilterLabel = styled.button`
   justify-content: center;
   align-items: center;
   width: 33%;
+  padding: 10px 0px;
+  border: none;
+  cursor: pointer;
 `;
 
 const FilterLabelContainer = styled.div`
@@ -60,7 +63,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
   // states
   const [page, setPage] = useState<number>(1);
   const [currentOption, setCurrentOption] = useState<FilterOption>(
-    FilterOption.Comics
+    FilterOption.Events
   );
 
   // filter states
@@ -115,7 +118,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
   };
 
   // page logic
-  const nextPage = (): void => {
+  const increasePage = (pageChange: number): void => {
     let maxPage;
     switch (currentOption) {
       case FilterOption.Events:
@@ -128,13 +131,13 @@ const FilterModal: React.FC<FilterModalProps> = ({
         maxPage = series && Math.ceil(series.data.total / 20);
         break;
     }
-    if (maxPage && page !== maxPage) {
-      setPage(page + 1);
+    if (maxPage && pageChange + page <= maxPage) {
+      setPage(page + pageChange);
     }
   };
-  const prevPage = (): void => {
-    if (page !== 1) {
-      setPage(page - 1);
+  const decreasePage = (pageChange: number): void => {
+    if (page - pageChange >= 1) {
+      setPage(page - pageChange);
     }
   };
 
@@ -234,52 +237,62 @@ const FilterModal: React.FC<FilterModalProps> = ({
   };
 
   const saveFilters = (): void => {
-    switch (currentOption) {
-      case FilterOption.Events:
-        setEventFiltersFunction(selectedEventFilters);
-        break;
-      case FilterOption.Comics:
-        setComicFiltersFunction(selectedComicFilters);
-        break;
-      case FilterOption.Series:
-        setSeriesFiltersFunction(selectedSeriesFilters);
-        break;
-    }
+    setEventFiltersFunction(selectedEventFilters);
+    setComicFiltersFunction(selectedComicFilters);
+    setSeriesFiltersFunction(selectedSeriesFilters);
   };
+
+  const closeModal = (): void => {
+    saveFilters();
+    closeModalFunction();
+  };
+
+  // label styling
+  const EventsLabel = styled(FilterLabel)`
+    color: ${(props) =>
+      currentOption === FilterOption.Events ? css`white` : css`gray`};
+  `;
+  const ComicsLabel = styled(FilterLabel)`
+    color: ${(props) =>
+      currentOption === FilterOption.Comics ? css`white` : css`gray`};
+  `;
+  const SeriesLabel = styled(FilterLabel)`
+    color: ${(props) =>
+      currentOption === FilterOption.Series ? css`white` : css`gray`};
+  `;
 
   return (
     <Container>
       <FilterLabelContainer>
-        <FilterLabel
+        <EventsLabel
           onClick={() => {
             setPage(1);
             setCurrentOption(FilterOption.Events);
           }}
         >
           Events
-        </FilterLabel>
-        <FilterLabel
+        </EventsLabel>
+        <ComicsLabel
           onClick={() => {
             setPage(1);
             setCurrentOption(FilterOption.Comics);
           }}
         >
           Comics
-        </FilterLabel>
-        <FilterLabel
+        </ComicsLabel>
+        <SeriesLabel
           onClick={() => {
             setPage(1);
             setCurrentOption(FilterOption.Series);
           }}
         >
           Series
-        </FilterLabel>
+        </SeriesLabel>
       </FilterLabelContainer>
-      <button onClick={() => prevPage()}>Previous Page</button>
-      <button onClick={() => nextPage()}>Next Page</button>
-      <button onClick={closeModalFunction}>Close Modal</button>
+      <button onClick={() => decreasePage(1)}>Previous Page</button>
+      <button onClick={() => increasePage(1)}>Next Page</button>
+      <button onClick={closeModal}>Close Modal</button>
       {renderListContent()}
-      <button onClick={saveFilters}>Save filters</button>
     </Container>
   );
 };
