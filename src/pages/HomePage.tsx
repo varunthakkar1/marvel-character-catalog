@@ -25,6 +25,7 @@ const ButtonContainer = styled.div`
 
 const CharacterCardContainer = styled.div`
   display: flex;
+  justify-content: space-evenly;
   flex-wrap: wrap;
 `;
 
@@ -104,7 +105,7 @@ const HomePage: React.FC<HomePageProps> = () => {
       </ButtonContainer>
       <CharacterCardContainer>
         {characters &&
-          characters.data.results.map((char: Character) => (
+          characters.data.results.filter((char: Character) => (char.events.available > 0 || char.series.available > 0 || char.comics.available > 0)).map((char: Character) => (
             <CharacterCard key={char.id} character={char}>
               {char.name}
             </CharacterCard>
