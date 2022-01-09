@@ -39,9 +39,9 @@ const CharacterName = styled.div`
 
 const CharacterDescription = styled.div`
   display: flex;
-  width: 240px;
+  width: 250px;
   margin-bottom: 16px;
-  font-size: 13px;
+  font-size: 12.5px;
   text-align: center;
   font-weight: light;
 `;
@@ -62,7 +62,7 @@ const Stat = styled.div`
 `;
 
 const StatDivider = styled.div`
-  width: 1px;
+  width: 0.5px;
   height: 100%;
   background-color: black;
 `;
