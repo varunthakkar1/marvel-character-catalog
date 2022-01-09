@@ -38,6 +38,13 @@ const ModalContainer = styled.div`
   background: rgba(0, 0, 0, 0.6);
 `;
 
+const StatusMessage = styled.div`
+  display: flex;
+  font-size: 25px;
+  font-weight: bolder;
+  margin: 25px 0px;
+`;
+
 const HomePage: React.FC<HomePageProps> = () => {
   // filter states
   const [eventFilters, setEventFilters] = useState<Filter[]>([]);
@@ -51,7 +58,7 @@ const HomePage: React.FC<HomePageProps> = () => {
   const [page, setPage] = useState<number>(1);
 
   // character query
-  const { data: characters } = useQuery<GetCharactersResponse, Error>(
+  const { isLoading, isError, data: characters } = useQuery<GetCharactersResponse, Error>(
     [
       "characters",
       {
@@ -117,6 +124,8 @@ const HomePage: React.FC<HomePageProps> = () => {
                 {char.name}
               </CharacterCard>
             ))}
+        {isLoading && <StatusMessage>Loading...</StatusMessage>}
+        {isError && <StatusMessage>Error!</StatusMessage>}
       </CharacterCardContainer>
       {showFilterModal && (
         <ModalContainer>
