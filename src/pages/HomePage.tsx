@@ -105,11 +105,18 @@ const HomePage: React.FC<HomePageProps> = () => {
       </ButtonContainer>
       <CharacterCardContainer>
         {characters &&
-          characters.data.results.filter((char: Character) => (char.events.available > 0 || char.series.available > 0 || char.comics.available > 0)).map((char: Character) => (
-            <CharacterCard key={char.id} character={char}>
-              {char.name}
-            </CharacterCard>
-          ))}
+          characters.data.results
+            .filter(
+              (char: Character) =>
+                char.events.available > 0 ||
+                char.series.available > 0 ||
+                char.comics.available > 0
+            )
+            .map((char: Character) => (
+              <CharacterCard key={char.id} character={char}>
+                {char.name}
+              </CharacterCard>
+            ))}
       </CharacterCardContainer>
       {showFilterModal && (
         <ModalContainer>

@@ -30,10 +30,10 @@ const TextContainer = styled.div`
 const Icon = styled(AiOutlinePlus)<{ selected: boolean }>`
   display: flex;
   padding: 0;
-  transition: transform 0.3s ease-out;
+  transition: transform 0.4s ease-out;
   height: 100%;
   cursor: pointer;
-  transform: ${(props) => (props.selected ? `rotate(45deg)` : "")};
+  transform: ${(props) => (props.selected ? "rotate(45deg)" : "")};
 `;
 
 const IconContainer = styled.div`

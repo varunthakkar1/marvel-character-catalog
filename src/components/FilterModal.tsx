@@ -48,7 +48,7 @@ const FilterLabel = styled.button`
   border: none;
   font-weight: bold;
   color: whitesmoke;
-  font-size: 12px; 
+  font-size: 12px;
 `;
 
 const FilterLabelContainer = styled.div`
