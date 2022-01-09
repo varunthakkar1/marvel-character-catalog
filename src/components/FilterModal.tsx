@@ -49,11 +49,13 @@ const FilterLabel = styled.button`
   font-weight: bold;
   color: whitesmoke;
   font-size: 12px;
+  cursor: pointer;
 `;
 
 const FilterLabelContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
+  width: 100%;
 `;
 
 const PageNumberText = styled.div`
@@ -280,8 +282,9 @@ const FilterModal: React.FC<FilterModalProps> = ({
   `;
 
   // other button styling
-  const CloseModalButton = styled.button`
+  const ApplyButton = styled.button`
     color: whitesmoke;
+    cursor: pointer;
     font-weight: bold;
     border: none;
     padding: 10px 0px;
@@ -325,7 +328,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
       <button onClick={() => increasePage(1)}>Next Page</button>
       {renderListContent()}
       <PageNumberText>Page {page}</PageNumberText>
-      <CloseModalButton onClick={closeModal}>Apply</CloseModalButton>
+      <ApplyButton onClick={closeModal}>Apply</ApplyButton>
     </Container>
   );
 };

@@ -94,7 +94,7 @@ const HomePage: React.FC<HomePageProps> = () => {
   const saveFilters = (
     eventFilters: Filter[],
     comicFilters: Filter[],
-    seriesFilter: Filter[]
+    seriesFilters: Filter[]
   ): void => {
     setEventFilters(eventFilters);
     setComicFilters(comicFilters);
