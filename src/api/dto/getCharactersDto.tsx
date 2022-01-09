@@ -7,7 +7,7 @@ export interface GetCharactersResponse {
     total: number;
   };
   code: number;
-  status: String;
+  status: string;
 }
 
 export interface GetCharactersRequest {

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useQuery } from "react-query";
 import styled, { css } from "styled-components";
 import { GetEventsResponse } from "../api/dto/getEventsDto";
-import getEvents from "../api/EventAPI";
-import getComics from "../api/ComicAPI";
+import getEvents from "../api/eventApi";
+import getComics from "../api/comicApi";
 import { Filter } from "../models/filter";
 import { Event } from "../models/event";
 import { FilterOption } from "../models/filterOption";
@@ -11,7 +11,7 @@ import FilterListItem from "./FilterListItem";
 import { GetComicsResponse } from "../api/dto/getComicsDto";
 import { Comic } from "../models/comic";
 import { GetSeriesResponse } from "../api/dto/getSeriesDto";
-import getSeries from "../api/SeriesAPI";
+import getSeries from "../api/seriesApi";
 import { Series } from "../models/series";
 
 interface FilterModalProps {
@@ -19,9 +19,11 @@ interface FilterModalProps {
   initialSelectedEventFilters: Filter[];
   initialSelectedComicFilters: Filter[];
   initialSelectedSeriesFilters: Filter[];
-  setEventFiltersFunction: (filters: Filter[]) => void;
-  setSeriesFiltersFunction: (filters: Filter[]) => void;
-  setComicFiltersFunction: (filters: Filter[]) => void;
+  setFiltersFunction: (
+    eventFilters: Filter[],
+    comicFilters: Filter[],
+    seriesFilter: Filter[]
+  ) => void;
 }
 
 const Container = styled.div`
@@ -65,9 +67,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
   initialSelectedEventFilters,
   initialSelectedSeriesFilters,
   initialSelectedComicFilters,
-  setEventFiltersFunction,
-  setSeriesFiltersFunction,
-  setComicFiltersFunction,
+  setFiltersFunction,
 }) => {
   // states
   const [page, setPage] = useState<number>(1);
@@ -100,9 +100,9 @@ const FilterModal: React.FC<FilterModalProps> = ({
     () => getSeries({ page: page })
   );
 
-  // filter 'selected' prop logic helper
+  // filter "selected" prop logic helper
   const isFilterSelected = (id: number): boolean => {
-    let result = false;
+    let result: boolean = false;
     let currentSelectedFilters = selectedEventFilters;
     switch (currentOption) {
       case FilterOption.Events: {
@@ -246,9 +246,11 @@ const FilterModal: React.FC<FilterModalProps> = ({
   };
 
   const saveFilters = (): void => {
-    setEventFiltersFunction(selectedEventFilters);
-    setComicFiltersFunction(selectedComicFilters);
-    setSeriesFiltersFunction(selectedSeriesFilters);
+    setFiltersFunction(
+      selectedEventFilters,
+      selectedComicFilters,
+      selectedSeriesFilters
+    );
   };
 
   const closeModal = (): void => {
@@ -325,7 +327,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
       <button onClick={() => increasePage(1)}>Next Page</button>
       {renderListContent()}
       <PageNumberText>Page {page}</PageNumberText>
-      <CloseModalButton onClick={closeModal}>Close</CloseModalButton>
+      <CloseModalButton onClick={closeModal}>Apply</CloseModalButton>
     </Container>
   );
 };

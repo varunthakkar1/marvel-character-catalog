@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
-import getCharacters from "../api/CharacterAPI";
+import getCharacters from "../api/characterApi";
 import { GetCharactersResponse } from "../api/dto/getCharactersDto";
 import CharacterCard from "../components/CharacterCard";
 import FilterModal from "../components/FilterModal";
@@ -83,14 +83,14 @@ const HomePage: React.FC<HomePageProps> = () => {
   };
 
   // saving filter logic
-  const saveEventFilters = (filters: Filter[]): void => {
-    setEventFilters(filters);
-  };
-  const saveSeriesFilters = (filters: Filter[]): void => {
-    setSeriesFilters(filters);
-  };
-  const saveComicFilters = (filters: Filter[]): void => {
-    setComicFilters(filters);
+  const saveFilters = (
+    eventFilters: Filter[],
+    comicFilters: Filter[],
+    seriesFilter: Filter[]
+  ): void => {
+    setEventFilters(eventFilters);
+    setComicFilters(comicFilters);
+    setSeriesFilters(seriesFilters);
   };
 
   return (
@@ -113,9 +113,7 @@ const HomePage: React.FC<HomePageProps> = () => {
       {showFilterModal && (
         <ModalContainer>
           <FilterModal
-            setEventFiltersFunction={saveEventFilters}
-            setSeriesFiltersFunction={saveSeriesFilters}
-            setComicFiltersFunction={saveComicFilters}
+            setFiltersFunction={saveFilters}
             initialSelectedComicFilters={comicFilters}
             initialSelectedEventFilters={eventFilters}
             initialSelectedSeriesFilters={seriesFilters}
