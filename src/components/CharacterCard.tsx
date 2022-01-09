@@ -16,9 +16,11 @@ const Container = styled.div`
 `;
 
 const Thumbnail = styled.img`
-  display: flex;
-  max-width: 60%;
-  max-height: 200px;
+  display: inline-block;
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+  object-fit: cover;
 `;
 
 const CharacterCard: React.FC<CharacterCardProps> = ({ character }) => {
