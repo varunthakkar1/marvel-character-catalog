@@ -46,8 +46,9 @@ const FilterLabel = styled.button`
   width: 34%;
   padding: 10px 0px;
   border: none;
-  cursor: pointer;
   font-weight: bold;
+  color: whitesmoke;
+  font-size: 12px; 
 `;
 
 const FilterLabelContainer = styled.div`
@@ -260,21 +261,18 @@ const FilterModal: React.FC<FilterModalProps> = ({
 
   // filter label button styling
   const EventsLabel = styled(FilterLabel)`
-    color: whitesmoke;
     background-color: ${(props) =>
       currentOption === FilterOption.Events
         ? css`rgba(149, 125, 173, 0.6)`
         : css`rgba(0, 0, 0, 0.4)`};
   `;
   const ComicsLabel = styled(FilterLabel)`
-    color: whitesmoke;
     background-color: ${(props) =>
       currentOption === FilterOption.Comics
         ? css`rgba(210, 145, 188, 0.6)`
         : css`rgba(0, 0, 0, 0.4)`};
   `;
   const SeriesLabel = styled(FilterLabel)`
-    color: whitesmoke;
     background-color: ${(props) =>
       currentOption === FilterOption.Series
         ? css`rgba(255, 85, 80, 0.6)`
