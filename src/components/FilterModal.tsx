@@ -13,6 +13,10 @@ import { Comic } from "../models/comic";
 import { GetSeriesResponse } from "../api/dto/getSeriesDto";
 import getSeries from "../api/seriesApi";
 import { Series } from "../models/series";
+import {
+  MdOutlineArrowBackIos,
+  MdOutlineArrowForwardIos,
+} from "react-icons/md";
 
 interface FilterModalProps {
   closeModalFunction: () => void;
@@ -29,7 +33,7 @@ interface FilterModalProps {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 350px;
+  width: 348px;
   background: white;
   position: fixed;
   top: 50%;
@@ -61,8 +65,30 @@ const FilterLabelContainer = styled.div`
 const PageNumberText = styled.div`
   display: flex;
   justify-content: center;
-  padding: 10px;
+  align-items: center;
   font-size: 12px;
+`;
+
+const PageChangeButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  margin: 10px 0px;
+`;
+
+const PageChangeButton = styled.button<{ size: string }>`
+  display: flex;
+  width: ${(props) => (props.size === "large" ? "33.34%" : "12.5%")};
+  border: none;
+  background-color: white;
+  color: black;
+  padding: 10px 0xp;
+  margin-bottom: 5px;
+  margin-top: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
 `;
 
 const FilterModal: React.FC<FilterModalProps> = ({
@@ -296,6 +322,64 @@ const FilterModal: React.FC<FilterModalProps> = ({
         : css`rgba(210, 145, 188, 0.6)`};
   `;
 
+  // page control button rendering
+  const renderButtons = (): JSX.Element | undefined => {
+    const largeLeftArrow: JSX.Element = <MdOutlineArrowBackIos size="25px" />;
+    const smallLeftArrow: JSX.Element = <MdOutlineArrowBackIos size="10px" />;
+    const largeRightArrow: JSX.Element = (
+      <MdOutlineArrowForwardIos size="25px" />
+    );
+    const smallRightArrow: JSX.Element = (
+      <MdOutlineArrowForwardIos size="10px" />
+    );
+
+    switch (currentOption) {
+      case FilterOption.Events:
+        return (
+          <PageChangeButtonContainer>
+            <PageChangeButton size="large" onClick={() => decreasePage(1)}>
+              {largeLeftArrow}
+            </PageChangeButton>
+            <PageNumberText>Page {page}</PageNumberText>
+            <PageChangeButton size="large" onClick={() => increasePage(1)}>
+              {largeRightArrow}
+            </PageChangeButton>
+          </PageChangeButtonContainer>
+        );
+      case FilterOption.Series:
+      case FilterOption.Comics:
+        return (
+          <PageChangeButtonContainer>
+            <PageChangeButton size="small" onClick={() => decreasePage(50)}>
+              {smallLeftArrow}
+              {smallLeftArrow}
+              {smallLeftArrow}
+            </PageChangeButton>
+            <PageChangeButton size="small" onClick={() => decreasePage(10)}>
+              {smallLeftArrow}
+              {smallLeftArrow}
+            </PageChangeButton>
+            <PageChangeButton size="small" onClick={() => decreasePage(1)}>
+              {smallLeftArrow}
+            </PageChangeButton>
+            <PageNumberText>Page {page}</PageNumberText>
+            <PageChangeButton size="small" onClick={() => increasePage(1)}>
+              {smallRightArrow}
+            </PageChangeButton>
+            <PageChangeButton size="small" onClick={() => increasePage(10)}>
+              {smallRightArrow}
+              {smallRightArrow}
+            </PageChangeButton>
+            <PageChangeButton size="small" onClick={() => increasePage(50)}>
+              {smallRightArrow}
+              {smallRightArrow}
+              {smallRightArrow}
+            </PageChangeButton>
+          </PageChangeButtonContainer>
+        );
+    }
+  };
+
   return (
     <Container>
       <FilterLabelContainer>
@@ -324,10 +408,8 @@ const FilterModal: React.FC<FilterModalProps> = ({
           Series
         </SeriesLabel>
       </FilterLabelContainer>
-      <button onClick={() => decreasePage(1)}>Previous Page</button>
-      <button onClick={() => increasePage(1)}>Next Page</button>
       {renderListContent()}
-      <PageNumberText>Page {page}</PageNumberText>
+      {renderButtons()}
       <ApplyButton onClick={closeModal}>Apply</ApplyButton>
     </Container>
   );

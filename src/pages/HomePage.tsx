@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
 import getCharacters from "../api/characterApi";
+import { API_OUTPUT_LIMIT } from "../api/client";
 import { GetCharactersResponse } from "../api/dto/getCharactersDto";
 import CharacterCard from "../components/CharacterCard";
 import FilterModal from "../components/FilterModal";
@@ -58,7 +59,11 @@ const HomePage: React.FC<HomePageProps> = () => {
   const [page, setPage] = useState<number>(1);
 
   // character query
-  const { isLoading, isError, data: characters } = useQuery<GetCharactersResponse, Error>(
+  const {
+    isLoading,
+    isError,
+    data: characters,
+  } = useQuery<GetCharactersResponse, Error>(
     [
       "characters",
       {
@@ -78,7 +83,8 @@ const HomePage: React.FC<HomePageProps> = () => {
   );
 
   // page logic
-  const maxPage = characters && Math.ceil(characters.data.total / 20);
+  const maxPage =
+    characters && Math.ceil(characters.data.total / API_OUTPUT_LIMIT);
   const nextPage = (): void => {
     if (maxPage && page !== maxPage) {
       setPage(page + 1);
