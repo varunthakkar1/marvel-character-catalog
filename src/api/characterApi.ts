@@ -9,6 +9,7 @@ const getCharacters = async ({
   events,
   series,
   comics,
+  nameStartsWith,
   page,
 }: GetCharactersRequest): Promise<GetCharactersResponse> => {
   const response = await apiClient.get(
@@ -16,6 +17,7 @@ const getCharacters = async ({
       events: events,
       series: series,
       comics: comics,
+      nameStartsWith: nameStartsWith,
       page: page,
     })
   );

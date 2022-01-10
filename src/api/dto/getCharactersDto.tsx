@@ -14,5 +14,6 @@ export interface GetCharactersRequest {
   events: Filter[];
   series: Filter[];
   comics: Filter[];
+  nameStartsWith: string;
   page: number;
 }

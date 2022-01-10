@@ -6,6 +6,7 @@ const constructCharacterQuery = ({
   events,
   series,
   comics,
+  nameStartsWith,
   page,
 }: GetCharactersRequest): string => {
   let url =
@@ -32,6 +33,9 @@ const constructCharacterQuery = ({
     comics.forEach((comic) => {
       url = url + comic.id + "%2C";
     });
+  }
+  if (nameStartsWith.length > 0) {
+    url = url + "&nameStartsWith=" + nameStartsWith;
   }
   return url;
 };
