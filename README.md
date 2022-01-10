@@ -1,10 +1,16 @@
-# Getting Started with Create React App
+## To use the app
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A Marvel developer account and API key is needed to use this project. 
+
+To use this app, create a file under the `src/` directory called `constants.js`.
+Next, add the following line:
+`export const URL_ENDING = "ts=1&hash=YOUR_HASH_HERE" + "&apikey=YOUR_PUBLIC_API_KEY_HERE";`
+
+For instructions on how to get an API key and hash, visit the [https://developer.marvel.com/](Marvel Developer Portal)
 
 ## Available Scripts
 
-In the project directory, you can run:
+To start the project:
 
 ### `npm start`
 
@@ -13,16 +19,3 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-# TODO
-[] Finish HomePage and respective components
-    [] Add filter components
-    [] Set up events, series, and stories API routes
-    [] Add catalog components
-
-[] Add tests
