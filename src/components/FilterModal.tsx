@@ -124,18 +124,18 @@ const FilterModal: React.FC<FilterModalProps> = ({
   );
 
   // queries
-  const { data: events, isLoading: eventsLoading } = useQuery<GetEventsResponse, Error>(
-    ["events", page],
-    () => getEvents({ page: page })
-  );
-  const { data: comics, isLoading: comicsLoading } = useQuery<GetComicsResponse, Error>(
-    ["comics", page],
-    () => getComics({ page: page })
-  );
-  const { data: series, isLoading: seriesLoading } = useQuery<GetSeriesResponse, Error>(
-    ["series", page],
-    () => getSeries({ page: page })
-  );
+  const { data: events, isLoading: eventsLoading } = useQuery<
+    GetEventsResponse,
+    Error
+  >(["events", page], () => getEvents({ page: page }));
+  const { data: comics, isLoading: comicsLoading } = useQuery<
+    GetComicsResponse,
+    Error
+  >(["comics", page], () => getComics({ page: page }));
+  const { data: series, isLoading: seriesLoading } = useQuery<
+    GetSeriesResponse,
+    Error
+  >(["series", page], () => getSeries({ page: page }));
 
   // filter "selected" prop logic helper
   const isFilterSelected = (id: number): boolean => {
@@ -416,7 +416,11 @@ const FilterModal: React.FC<FilterModalProps> = ({
           Series
         </SeriesLabel>
       </FilterLabelContainer>
-      {(seriesLoading || eventsLoading || comicsLoading) ? <StatusMessage>Loading...</StatusMessage> : renderListContent()}
+      {seriesLoading || eventsLoading || comicsLoading ? (
+        <StatusMessage>Loading...</StatusMessage>
+      ) : (
+        renderListContent()
+      )}
       {renderPageControlButtons()}
       <ApplyButton onClick={closeModal}>Apply</ApplyButton>
     </Container>

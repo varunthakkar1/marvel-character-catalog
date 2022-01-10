@@ -1,7 +1,6 @@
 import React from "react";
 import HomePage from "./pages/HomePage";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
-import CharacterPage from "./pages/CharacterPage";
 import GlobalStyle from "./globalStyles";
 import styled from "styled-components";
 
@@ -17,7 +16,6 @@ const App: React.FC = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/:id" element={<CharacterPage />} />
         </Routes>
       </BrowserRouter>
     </Container>
