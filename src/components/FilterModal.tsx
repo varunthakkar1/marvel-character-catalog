@@ -91,6 +91,14 @@ const PageChangeButton = styled.button<{ size: string }>`
   align-items: center;
 `;
 
+const StatusMessage = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  font-size: 20px;
+  margin: 25px 0px;
+`;
+
 const FilterModal: React.FC<FilterModalProps> = ({
   closeModalFunction,
   initialSelectedEventFilters,
@@ -116,15 +124,15 @@ const FilterModal: React.FC<FilterModalProps> = ({
   );
 
   // queries
-  const { data: events } = useQuery<GetEventsResponse, Error>(
+  const { data: events, isLoading: eventsLoading } = useQuery<GetEventsResponse, Error>(
     ["events", page],
     () => getEvents({ page: page })
   );
-  const { data: comics } = useQuery<GetComicsResponse, Error>(
+  const { data: comics, isLoading: comicsLoading } = useQuery<GetComicsResponse, Error>(
     ["comics", page],
     () => getComics({ page: page })
   );
-  const { data: series } = useQuery<GetSeriesResponse, Error>(
+  const { data: series, isLoading: seriesLoading } = useQuery<GetSeriesResponse, Error>(
     ["series", page],
     () => getSeries({ page: page })
   );
@@ -225,6 +233,54 @@ const FilterModal: React.FC<FilterModalProps> = ({
     }
   };
 
+  const saveFilters = (): void => {
+    setFiltersFunction(
+      selectedEventFilters,
+      selectedComicFilters,
+      selectedSeriesFilters
+    );
+  };
+
+  const closeModal = (): void => {
+    saveFilters();
+    closeModalFunction();
+  };
+
+  // filter label button styling
+  const EventsLabel = styled(FilterLabel)`
+    background-color: ${(props) =>
+      currentOption === FilterOption.Events
+        ? css`rgba(149, 125, 173, 0.6)`
+        : css`rgba(0, 0, 0, 0.4)`};
+  `;
+  const ComicsLabel = styled(FilterLabel)`
+    background-color: ${(props) =>
+      currentOption === FilterOption.Comics
+        ? css`rgba(210, 145, 188, 0.6)`
+        : css`rgba(0, 0, 0, 0.4)`};
+  `;
+  const SeriesLabel = styled(FilterLabel)`
+    background-color: ${(props) =>
+      currentOption === FilterOption.Series
+        ? css`rgba(255, 85, 80, 0.6)`
+        : css`rgba(0, 0, 0, 0.4)`};
+  `;
+
+  // other button styling
+  const ApplyButton = styled.button`
+    color: whitesmoke;
+    cursor: pointer;
+    font-weight: bold;
+    border: none;
+    padding: 10px 0px;
+    background-color: ${(props) =>
+      currentOption === FilterOption.Series
+        ? css`rgba(255, 85, 80, 0.6)`
+        : currentOption === FilterOption.Events
+        ? css`rgba(149, 125, 173, 0.6)`
+        : css`rgba(210, 145, 188, 0.6)`};
+  `;
+
   // rendering filters in modal content
   const renderListContent = (): JSX.Element[] | undefined => {
     let output;
@@ -274,56 +330,8 @@ const FilterModal: React.FC<FilterModalProps> = ({
     return output;
   };
 
-  const saveFilters = (): void => {
-    setFiltersFunction(
-      selectedEventFilters,
-      selectedComicFilters,
-      selectedSeriesFilters
-    );
-  };
-
-  const closeModal = (): void => {
-    saveFilters();
-    closeModalFunction();
-  };
-
-  // filter label button styling
-  const EventsLabel = styled(FilterLabel)`
-    background-color: ${(props) =>
-      currentOption === FilterOption.Events
-        ? css`rgba(149, 125, 173, 0.6)`
-        : css`rgba(0, 0, 0, 0.4)`};
-  `;
-  const ComicsLabel = styled(FilterLabel)`
-    background-color: ${(props) =>
-      currentOption === FilterOption.Comics
-        ? css`rgba(210, 145, 188, 0.6)`
-        : css`rgba(0, 0, 0, 0.4)`};
-  `;
-  const SeriesLabel = styled(FilterLabel)`
-    background-color: ${(props) =>
-      currentOption === FilterOption.Series
-        ? css`rgba(255, 85, 80, 0.6)`
-        : css`rgba(0, 0, 0, 0.4)`};
-  `;
-
-  // other button styling
-  const ApplyButton = styled.button`
-    color: whitesmoke;
-    cursor: pointer;
-    font-weight: bold;
-    border: none;
-    padding: 10px 0px;
-    background-color: ${(props) =>
-      currentOption === FilterOption.Series
-        ? css`rgba(255, 85, 80, 0.6)`
-        : currentOption === FilterOption.Events
-        ? css`rgba(149, 125, 173, 0.6)`
-        : css`rgba(210, 145, 188, 0.6)`};
-  `;
-
   // page control button rendering
-  const renderButtons = (): JSX.Element | undefined => {
+  const renderPageControlButtons = (): JSX.Element | undefined => {
     const largeLeftArrow: JSX.Element = <MdOutlineArrowBackIos size="25px" />;
     const smallLeftArrow: JSX.Element = <MdOutlineArrowBackIos size="10px" />;
     const largeRightArrow: JSX.Element = (
@@ -408,8 +416,8 @@ const FilterModal: React.FC<FilterModalProps> = ({
           Series
         </SeriesLabel>
       </FilterLabelContainer>
-      {renderListContent()}
-      {renderButtons()}
+      {(seriesLoading || eventsLoading || comicsLoading) ? <StatusMessage>Loading...</StatusMessage> : renderListContent()}
+      {renderPageControlButtons()}
       <ApplyButton onClick={closeModal}>Apply</ApplyButton>
     </Container>
   );
